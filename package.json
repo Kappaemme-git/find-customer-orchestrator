@@ -1,0 +1,29 @@
+{
+  "name": "find-customer-orchestrator",
+  "version": "0.1.0",
+  "description": "Install Francesco's Codex prospect-to-demo workflow on Windows",
+  "bin": {
+    "find-customer-orchestrator": "bin/find-customer-orchestrator.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "AGENTS.md",
+    "AUTOMATION_PROMPT.md",
+    "WORKFLOW.md",
+    "SETUP_WINDOWS.md",
+    "scripts/",
+    "skills/",
+    "templates/",
+    "bin/"
+  ],
+  "keywords": ["codex", "skill", "prospecting", "claude-code", "vercel"],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kappaemme-git/find-customer-orchestrator.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
