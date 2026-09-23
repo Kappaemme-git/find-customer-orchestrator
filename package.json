@@ -1,6 +1,6 @@
 {
   "name": "find-customer-orchestrator",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Install Francesco's Codex prospect-to-demo workflow on Windows",
   "bin": {
     "find-customer-orchestrator": "bin/find-customer-orchestrator.js"

@@ -14,6 +14,7 @@ Work from the Find Customer Automation project folder containing `scripts/workfl
 - Search the exact business name with location and cross-check public sources. Offer only `no_site_found` or `social_only` candidates in the selectable shortlist. Exclude existing standalone sites and ambiguous cases. Say "no site found after these checks," not "proved no site exists."
 - Give each lead source URLs, check date, confidence and a concise reason. Never invent a prospect or fill a quota with weak matches. Save each qualified lead as JSON with `py scripts/workflow.py add <lead.json>` on Windows, then show Francesco its returned ID. Keep raw research output and registry outside installed skill directories.
 - Wait for Francesco to choose an ID, then mark it selected with `py scripts/workflow.py select <id>`. Recheck the absence of an official site before building a demo. If a site is found or evidence becomes ambiguous, stop work on that lead.
+- Once Francesco chooses the lead, execute the demo workflow without asking whether you may read project files, inspect the code, run `/design`, create a mockup, edit or fix the site, open and check the local preview, run the build, or deploy the Vercel preview. These are authorized steps toward the requested demo. Ask Francesco to choose an artboard only when the canvas cannot be inspected and that choice is genuinely needed; do not ask for routine implementation decisions.
 
 ## Brief and visual assets
 
@@ -21,12 +22,14 @@ For the chosen lead, write a brief using `templates/brief.md`. Record observed c
 
 ## Claude and Vercel
 
-1. Verify `claude` and `vercel.cmd` on Windows, and that Claude can see the brief/assets. Use `templates/design-prompt.md` with Claude Code's built-in `/design` command. It creates artboards, not finished site files. Capture its canvas URL in the register.
+1. Verify `claude` and `vercel.cmd` on Windows, and that Claude can see the brief/assets. Launch Claude Code with `--permission-mode auto` so its routine tool calls receive automatic review; Codex's permission setting does not control Claude's prompts. If using `claude -p`, pass this flag explicitly because print mode otherwise starts in manual mode unless separately configured. Use `templates/design-prompt.md` with Claude Code's built-in `/design` command. It creates artboards, not finished site files. Capture its canvas URL in the register.
 2. Prefer an interactive Claude CLI session for the first `/design` test because the documented flow is interactive. Do not assume `claude -p` produces a usable canvas. If a CLI automation mode works in the smoke test, it can be used thereafter.
 3. Inspect the artboards and choose one against the brief, or ask Francesco to choose if the canvas cannot be inspected. Pass `templates/implementation-prompt.md` and the chosen artboard back to Claude in the same session to create the files.
 4. Verify the site locally: build if applicable, desktop/mobile appearance, links, reduced-motion behavior, factual content, asset rights and visible concept status. Fix material failures before deployment.
 5. Deploy only as a Vercel preview with `python scripts/workflow.py deploy <id> --folder <site-folder> --account <expected-vercel-username>`. This records the exact URL and account. Do not use `--prod` or a project name as a removal target.
 6. Draft the Italian or English outreach message with the preview link. Francesco sends it manually. Mark sent only after his confirmation with `python scripts/workflow.py sent <id>`.
+
+Do not turn an ordinary tool or implementation step into a question such as "May I open the code?" or "May I make the mockup?". Runtime permission prompts are separate from this skill; if Codex or Claude actually blocks an action, report the exact prompt or error and the action it stopped. Never claim the demo is complete while waiting for a permission response.
 
 ## Four-day follow-up
 

@@ -4,7 +4,7 @@ const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
 
-const usage = 'Uso: npx find-customer-orchestrator install [--project CARTELLA]';
+const usage = 'Uso: npx find-customer-orchestrator <install|upgrade> [--project CARTELLA]';
 const skillNames = ['first-customer-finder', 'local-client-prospector', 'find-customer-orchestrator'];
 const projectFiles = ['AGENTS.md', 'AUTOMATION_PROMPT.md', 'WORKFLOW.md', 'SETUP_WINDOWS.md', 'install-windows.ps1'];
 const projectFolders = ['scripts', 'skills', 'templates'];
@@ -14,7 +14,7 @@ function main(argv) {
     console.log(usage);
     return;
   }
-  if (argv[0] !== 'install') {
+  if (!['install', 'upgrade'].includes(argv[0])) {
     throw new Error(usage);
   }
   let project = path.join(os.homedir(), 'Documents', 'FindCustomerAutomation');
@@ -28,6 +28,30 @@ function main(argv) {
 
   const packageRoot = path.resolve(__dirname, '..');
   const skillTarget = process.env.FIND_CUSTOMER_SKILLS_DIR || path.join(os.homedir(), '.codex', 'skills');
+  if (argv[0] === 'upgrade') {
+    const updates = [
+      ['skills/find-customer-orchestrator/SKILL.md', path.join(project, 'skills', 'find-customer-orchestrator', 'SKILL.md')],
+      ['skills/find-customer-orchestrator/SKILL.md', path.join(skillTarget, 'find-customer-orchestrator', 'SKILL.md')],
+      ['WORKFLOW.md', path.join(project, 'WORKFLOW.md')],
+      ['SETUP_WINDOWS.md', path.join(project, 'SETUP_WINDOWS.md')],
+    ];
+    if (!fs.existsSync(path.join(project, 'scripts', 'workflow.py'))) {
+      throw new Error(`Progetto non riconosciuto: ${project}. Usa --project con la cartella corretta.`);
+    }
+    for (const [source, target] of updates) {
+      if (!fs.existsSync(path.join(packageRoot, source)) || !fs.existsSync(target)) {
+        throw new Error(`File necessario mancante: ${target}. Nessun file aggiornato.`);
+      }
+    }
+    const stamp = new Date().toISOString().replace(/[:.]/g, '-');
+    for (const [source, target] of updates) {
+      fs.copyFileSync(target, `${target}.backup-${stamp}`);
+      fs.copyFileSync(path.join(packageRoot, source), target);
+    }
+    console.log(`Skill orchestratrice e istruzioni aggiornate nel progetto: ${project}`);
+    console.log('Registro, demo, template e skill di ricerca conservati. Riavvia Codex per caricare la skill aggiornata.');
+    return;
+  }
   const existingProject = fs.existsSync(project) && fs.readdirSync(project).length > 0;
   if (existingProject) {
     throw new Error(`La cartella esiste e non e vuota: ${project}. Nessun file sovrascritto.`);

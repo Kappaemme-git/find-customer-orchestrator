@@ -3,10 +3,18 @@
 Installazione più semplice dal registro npm pubblico (quando la versione è stata pubblicata):
 
 ```powershell
-npx --yes find-customer-orchestrator@latest install
+npx.cmd --yes find-customer-orchestrator@latest install
 ```
 
 Questo comando crea la cartella `Documents\FindCustomerAutomation` e copia le tre skill in Codex. Se la cartella del progetto o una delle skill esiste già, si ferma senza sovrascrivere. Il pacchetto non contiene login o token.
+
+Per aggiornare la sola skill orchestratrice e le istruzioni dopo l'installazione iniziale, senza toccare registro o demo:
+
+```powershell
+npx.cmd --yes find-customer-orchestrator@latest upgrade
+```
+
+Riavviare Codex dopo l'aggiornamento. Se il progetto non si trova in `Documents\FindCustomerAutomation`, aggiungere `--project "C:\percorso\cartella"`.
 
 ## Alternativa ZIP
 
