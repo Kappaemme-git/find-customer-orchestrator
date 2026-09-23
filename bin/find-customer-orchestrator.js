@@ -6,7 +6,7 @@ const path = require('node:path');
 
 const usage = 'Uso: npx find-customer-orchestrator install [--project CARTELLA]';
 const skillNames = ['first-customer-finder', 'local-client-prospector', 'find-customer-orchestrator'];
-const projectFiles = ['AGENTS.md', 'AUTOMATION_PROMPT.md', 'WORKFLOW.md', 'SETUP_WINDOWS.md'];
+const projectFiles = ['AGENTS.md', 'AUTOMATION_PROMPT.md', 'WORKFLOW.md', 'SETUP_WINDOWS.md', 'install-windows.ps1'];
 const projectFolders = ['scripts', 'skills', 'templates'];
 
 function main(argv) {

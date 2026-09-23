@@ -13,6 +13,7 @@
     "AUTOMATION_PROMPT.md",
     "WORKFLOW.md",
     "SETUP_WINDOWS.md",
+    "install-windows.ps1",
     "scripts/",
     "skills/",
     "templates/",
